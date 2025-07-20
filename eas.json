@@ -4,6 +4,7 @@
       "distribution": "internal",
       "channel": "development",
       "developmentClient": true,
+      "prebuildCommand": "node scripts/write-google-services-json.js",
       "android": { 
         "gradleCommand": ":app:assembleDebug"
       },

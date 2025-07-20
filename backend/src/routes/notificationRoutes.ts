@@ -48,7 +48,7 @@ router.post('/send-notification/mock', async (req, res) => {
   }
 });
 
-// POST /send-notification
+// POST /send-notification - Using Expo's push notification service
 router.post('/send-notification', async (req, res) => {
   const { title, body } = req.body;
   if (!title || !body) {
@@ -61,24 +61,48 @@ router.post('/send-notification', async (req, res) => {
       return res.status(200).json({ success: false, message: 'No tokens found' });
     }
     
-    try {
-      const message = {
-        notification: { title, body },
-        tokens,
-      };
-      const response = await admin.messaging().sendMulticast(message);
-      res.json({ success: true, response, successCount: response.successCount });
-    } catch (firebaseError: any) {
-      console.error('Firebase error:', firebaseError);
-      // Fallback: return success but log the Firebase error
-      res.json({ 
-        success: true, 
-        message: 'Notification queued (Firebase temporarily unavailable)',
-        notification: { title, body },
-        tokenCount: tokens.length,
-        firebaseError: firebaseError.message
-      });
+    // Use Expo's push notification service
+    const messages = tokens.map(token => ({
+      to: token,
+      sound: 'default',
+      title: title,
+      body: body,
+      data: { someData: 'goes here' },
+    }));
+
+    const chunks = [];
+    for (let i = 0; i < messages.length; i += 100) {
+      chunks.push(messages.slice(i, i + 100));
     }
+
+    let successCount = 0;
+    for (const chunk of chunks) {
+      try {
+        const response = await fetch('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Accept-encoding': 'gzip, deflate',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(chunk),
+        });
+        
+        if (response.ok) {
+          successCount += chunk.length;
+        }
+      } catch (error) {
+        console.error('Error sending chunk:', error);
+      }
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Notifications sent via Expo',
+      notification: { title, body },
+      tokenCount: tokens.length,
+      successCount: successCount
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: (err as any).message });
   }

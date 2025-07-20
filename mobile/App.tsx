@@ -126,40 +126,71 @@ async function registerForPushNotificationsAsync() {
 }
 
 export default function App() {
+  console.log('🚀 App component mounted - TEST');
+  alert('🚀 App component is loading!'); // Test if component is loading
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  console.log('🚀 App component mounted');
+
   useEffect(() => {
+    console.log('🔄 Loading fonts...');
     Font.loadAsync({
       'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
       'Roboto-Bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
-    }).then(() => setFontsLoaded(true));
+    }).then(() => {
+      console.log('✅ Fonts loaded successfully');
+      setFontsLoaded(true);
+    }).catch((error) => {
+      console.log('❌ Font loading error:', error);
+      setFontsLoaded(true); // Continue anyway
+    });
   }, []);
 
   useEffect(() => {
+    console.log('📱 Fonts loaded state:', fontsLoaded);
+    if (!fontsLoaded) return; // Wait for fonts to load first
+    
     async function setupPushNotifications() {
+      console.log('🔧 Starting push notification setup...');
+      alert('🔧 Starting push notification setup...'); // Add visible alert
+      
       const token = await registerForPushNotificationsAsync();
+      console.log('📱 Push token received:', token);
+      
       if (token) {
         try {
           const backendUrl = Constants.expoConfig?.extra?.BACKEND_API_URL || '';
+          console.log('🌐 Backend URL:', backendUrl);
+          console.log('📤 Registering token with backend...');
+          
           const response = await fetch(`${backendUrl}/api/register-token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
           });
+          
+          console.log('📥 Backend response status:', response.status);
           const data = await response.json();
-          console.log('Push token registered:', data);
+          console.log('📥 Backend response data:', data);
+          
           if (data.success) {
-            alert('Push token registered successfully!');
+            console.log('✅ Push token registered successfully!');
+            alert('✅ Push token registered successfully! Token: ' + token.substring(0, 20) + '...');
           } else {
-            alert('Failed to register push token.');
+            console.log('❌ Failed to register push token:', data.message);
+            alert('❌ Failed to register push token: ' + data.message);
           }
         } catch (err) {
-          alert('Error registering push token.');
+          console.log('❌ Error registering push token:', err);
+          alert('❌ Error registering push token: ' + err);
         }
+      } else {
+        console.log('❌ No push token received');
+        alert('❌ No push token received - check permissions');
       }
     }
     setupPushNotifications();
-  }, []);
+  }, [fontsLoaded]); // Run when fonts are loaded
 
   if (!fontsLoaded) return <View />;
 

@@ -10,10 +10,12 @@ export default {
     },
     android: {
       package: "com.usman9696.assalah",
-      googleServicesFile: "./android/app/google-services.json",
     },
     ios: {
-      googleServicesFile: "./ios/GoogleService-Info.plist",
+      bundleIdentifier: "com.usman9696.assalah",
     },
+    plugins: [
+      "expo-notifications"
+    ],
   },
 };

@@ -128,10 +128,8 @@ async function registerForPushNotificationsAsync() {
   }
   console.log('✅ Permission granted, getting token...');
   try {
-    // Use Expo's push notification service instead of Firebase
-    token = (await Notifications.getExpoPushTokenAsync({
-      projectId: 'aae640e5-15b9-41c4-b5bc-273eb8bf4d50' // Your EAS project ID
-    })).data;
+    // Use Expo's push notification service without projectId
+    token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log('🎫 Token received:', token ? token.substring(0, 20) + '...' : 'null');
     return token;
   } catch (error) {

@@ -6,6 +6,22 @@ console.log('Loaded notificationRoutes');
 
 const router = Router();
 
+// GET /send-notification/test - Test endpoint without Firebase
+router.get('/send-notification/test', async (req, res) => {
+  try {
+    const tokensDocs = await Token.find({});
+    const tokens = tokensDocs.map(doc => doc.token);
+    res.json({ 
+      success: true, 
+      message: 'Test endpoint working', 
+      tokenCount: tokens.length,
+      tokens: tokens 
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: (err as any).message });
+  }
+});
+
 // POST /send-notification
 router.post('/send-notification', async (req, res) => {
   const { title, body } = req.body;

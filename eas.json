@@ -5,10 +5,7 @@
       "channel": "development",
       "developmentClient": true,
       "android": { 
-        "gradleCommand": ":app:assembleDebug",
-        "env": {
-          "GOOGLE_SERVICES_JSON": "android/app/google-services.json"
-        }
+        "gradleCommand": ":app:assembleDebug"
       },
       "ios": { "simulator": true }
     },

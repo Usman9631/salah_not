@@ -16,11 +16,9 @@ export default {
     },
     android: {
       package: "com.usman9696.assalah",
-      googleServicesFile: "android/app/google-services.json",
     },
     ios: {
       bundleIdentifier: "com.usman9696.assalah",
-      googleServicesFile: "ios/GoogleService-Info.plist",
     },
   },
 };

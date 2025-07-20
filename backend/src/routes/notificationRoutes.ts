@@ -48,7 +48,7 @@ router.post('/send-notification/mock', async (req, res) => {
   }
 });
 
-// POST /send-notification - Using Expo's push notification service
+// POST /send-notification - Using Firebase Admin SDK
 router.post('/send-notification', async (req, res) => {
   const { title, body } = req.body;
   if (!title || !body) {
@@ -61,48 +61,62 @@ router.post('/send-notification', async (req, res) => {
       return res.status(200).json({ success: false, message: 'No tokens found' });
     }
     
-    // Use Expo's push notification service
-    const messages = tokens.map(token => ({
-      to: token,
-      sound: 'default',
-      title: title,
-      body: body,
-      data: { someData: 'goes here' },
-    }));
+    try {
+      // Use Firebase Admin SDK to send notifications
+      const message = {
+        notification: { title, body },
+        tokens,
+      };
+      const response = await admin.messaging().sendMulticast(message);
+      res.json({ 
+        success: true, 
+        message: 'Notifications sent via Firebase',
+        notification: { title, body },
+        tokenCount: tokens.length,
+        successCount: response.successCount,
+        failureCount: response.failureCount
+      });
+    } catch (firebaseError: any) {
+      console.error('Firebase error:', firebaseError);
+      // Fallback to Expo push service
+      const messages = tokens.map(token => ({
+        to: token,
+        sound: 'default',
+        title: title,
+        body: body,
+        data: { someData: 'goes here' },
+      }));
 
-    const chunks = [];
-    for (let i = 0; i < messages.length; i += 100) {
-      chunks.push(messages.slice(i, i + 100));
-    }
-
-    let successCount = 0;
-    for (const chunk of chunks) {
-      try {
-        const response = await fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Accept-encoding': 'gzip, deflate',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(chunk),
-        });
-        
-        if (response.ok) {
-          successCount += chunk.length;
+      let successCount = 0;
+      for (const message of messages) {
+        try {
+          const response = await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Accept-encoding': 'gzip, deflate',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+          });
+          
+          if (response.ok) {
+            successCount++;
+          }
+        } catch (error) {
+          console.error('Error sending via Expo:', error);
         }
-      } catch (error) {
-        console.error('Error sending chunk:', error);
       }
+      
+      res.json({ 
+        success: true, 
+        message: 'Notifications sent via Expo (Firebase fallback)',
+        notification: { title, body },
+        tokenCount: tokens.length,
+        successCount: successCount,
+        firebaseError: firebaseError.message
+      });
     }
-    
-    res.json({ 
-      success: true, 
-      message: 'Notifications sent via Expo',
-      notification: { title, body },
-      tokenCount: tokens.length,
-      successCount: successCount
-    });
   } catch (err) {
     res.status(500).json({ success: false, message: (err as any).message });
   }

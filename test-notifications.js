@@ -1,4 +1,4 @@
-const https = require('https');
+const http = require('http');
 
 const BACKEND_URL = 'http://192.168.100.145:4000';
 let testCount = 0;
@@ -24,7 +24,7 @@ async function sendTestNotification() {
       }
     };
 
-    const req = https.request(options, (res) => {
+    const req = http.request(options, (res) => {
       let responseData = '';
       
       res.on('data', (chunk) => {

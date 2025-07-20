@@ -22,8 +22,8 @@ router.get('/send-notification/test', async (req, res) => {
   }
 });
 
-// POST /send-notification/simple - Simple notification without Firebase
-router.post('/send-notification/simple', async (req, res) => {
+// POST /send-notification/mock - Mock notification without Firebase
+router.post('/send-notification/mock', async (req, res) => {
   const { title, body } = req.body;
   if (!title || !body) {
     return res.status(400).json({ success: false, message: 'Title and body are required' });
@@ -35,12 +35,11 @@ router.post('/send-notification/simple', async (req, res) => {
       return res.status(200).json({ success: false, message: 'No tokens found' });
     }
     
-    // Just return success without actually sending via Firebase
+    // Mock successful notification sending
     res.json({ 
       success: true, 
-      message: 'Notification would be sent to devices',
-      title,
-      body,
+      message: 'Mock notification sent successfully',
+      notification: { title, body },
       tokenCount: tokens.length,
       tokens: tokens
     });

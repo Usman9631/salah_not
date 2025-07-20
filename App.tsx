@@ -128,6 +128,8 @@ async function registerForPushNotificationsAsync() {
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  console.log('🚀 App component mounted');
+
   useEffect(() => {
     console.log('🔄 Loading fonts...');
     Font.loadAsync({
@@ -143,6 +145,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    console.log('📱 Fonts loaded state:', fontsLoaded);
     if (!fontsLoaded) return; // Wait for fonts to load first
     
     async function setupPushNotifications() {

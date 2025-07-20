@@ -1,29 +1,3 @@
-{
-  "project_info": {
-    "project_number": "598075401124",
-    "project_id": "as-salah-96daa",
-    "storage_bucket": "as-salah-96daa.firebasestorage.app"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:598075401124:android:dff4555726473f9a83d731",
-        "android_client_info": {
-          "package_name": "com.yourcompany.assalah"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD4uEwL7Jnuml6Z9xBshlVvQjill_BGQ_4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6acd5142aeee90031853e7cb1a00e286ee0ee3c6cd56a238a43a8eed3525b30e
+size 681

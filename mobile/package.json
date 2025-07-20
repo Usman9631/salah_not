@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.tsx",
   "scripts": {
-    "prebuild": "node scripts/write-google-services-json.js",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "prebuild": "node scripts/write-google-services-json.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.2",

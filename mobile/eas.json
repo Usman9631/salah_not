@@ -4,8 +4,14 @@
       "distribution": "internal",
       "channel": "development",
       "developmentClient": true,
-      "android": { "gradleCommand": ":app:assembleDebug" },
-      "ios": { "simulator": true }
+      "android": { 
+        "gradleCommand": ":app:assembleDebug",
+        "env": {
+          "GOOGLE_SERVICES_JSON": "GOOGLE_SERVICES_JSON"
+        }
+      },
+      "ios": { "simulator": true },
+      "prebuildCommand": "npm run prebuild"
     },
     "preview": {
       "distribution": "internal",

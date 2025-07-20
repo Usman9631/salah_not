@@ -138,6 +138,8 @@ export default function App() {
   useEffect(() => {
     async function setupPushNotifications() {
       console.log('🔧 Starting push notification setup...');
+      alert('🔧 Starting push notification setup...'); // Add visible alert
+      
       const token = await registerForPushNotificationsAsync();
       console.log('📱 Push token received:', token);
       
@@ -159,17 +161,18 @@ export default function App() {
           
           if (data.success) {
             console.log('✅ Push token registered successfully!');
-            alert('Push token registered successfully!');
+            alert('✅ Push token registered successfully! Token: ' + token.substring(0, 20) + '...');
           } else {
             console.log('❌ Failed to register push token:', data.message);
-            alert('Failed to register push token.');
+            alert('❌ Failed to register push token: ' + data.message);
           }
         } catch (err) {
           console.log('❌ Error registering push token:', err);
-          alert('Error registering push token.');
+          alert('❌ Error registering push token: ' + err);
         }
       } else {
         console.log('❌ No push token received');
+        alert('❌ No push token received - check permissions');
       }
     }
     setupPushNotifications();

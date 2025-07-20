@@ -8,12 +8,19 @@ export default {
         projectId: "aae640e5-15b9-41c4-b5bc-273eb8bf4d50"
       }
     },
+    updates: {
+      url: "https://u.expo.dev/aae640e5-15b9-41c4-b5bc-273eb8bf4d50"
+    },
+    runtimeVersion: {
+      policy: "appVersion"
+    },
     android: {
       package: "com.usman9696.assalah",
-      googleServicesFile: "./android/app/google-services.json",
+      googleServicesFile: "android/app/google-services.json",
     },
     ios: {
-      googleServicesFile: "./ios/GoogleService-Info.plist",
+      bundleIdentifier: "com.usman9696.assalah",
+      googleServicesFile: "ios/GoogleService-Info.plist",
     },
   },
 };

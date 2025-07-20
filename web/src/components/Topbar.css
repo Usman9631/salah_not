@@ -1,0 +1,84 @@
+.topbar {
+  background: #A7BD32;
+  color: #fff;
+  height: 56px;
+  min-height: 56px;
+  width: 91.5%;
+  position: fixed;
+  top: 0;
+  left: 19.5px;
+  z-index: 2000;
+  box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+  display: flex;
+  align-items: center;
+  margin-left: 72px;
+  transition: margin-left 0.25s cubic-bezier(.4,0,.2,1);
+  border-radius: 8px;
+  margin-top: 5px;
+  margin-right: 10%;
+}
+
+.topbar-masjid-name {
+  font-size: 1.18rem;
+  letter-spacing: 0.01em;
+  align-items: flex-start;
+}
+
+.topbar-user-email {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    height: 54px;
+    min-height: 54px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-left: 0 !important;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0;
+  }
+  .topbar-masjid-name {
+    font-size: 1.08rem;
+    text-align: center;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: block;
+  }
+  .topbar-user-email {
+    display: none !important;
+  }
+  .topbar-burger {
+    display: inline-block !important;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  .topbar .btn.btn-link {
+    font-size: 1.5rem !important;
+    margin-right: 6px !important;
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+  .topbar .d-flex.align-items-center.gap-3 {
+    gap: 6px !important;
+  }
+}
+
+/* Utility classes for responsive show/hide */
+.d-none { display: none !important; }
+@media (min-width: 600px) {
+  .d-sm-flex { display: flex !important; }
+}
+@media (max-width: 599px) {
+  .d-sm-flex { display: none !important; }
+} 

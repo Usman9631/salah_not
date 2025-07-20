@@ -1,0 +1,177 @@
+[
+  {
+    "_id": "687a23d741a84f5e5736a358",
+    "name": "Masjid Al-Falah",
+    "imam": "Imam Ahmed Khan",
+    "streetAddress": "123 Main Street, Block 6",
+    "postalCode": "75300",
+    "country": "Pakistan",
+    "state": "Sindh",
+    "city": "Karachi",
+    "phoneNumber": "+92 300 1234567",
+    "email": "masjid.alfalah@email.com",
+    "logo": null,
+    "description": "A central masjid serving the local community with daily prayers, Jummah, and Islamic classes.",
+    "namazTiming": {
+      "Fajr": "05:30",
+      "Dhuhr": "01:15",
+      "Asr": "04:45",
+      "Maghrib": "07:20",
+      "Isha": "08:45",
+      "Jummah": "01:30"
+    },
+    "donations": [],
+    "announcements": [
+      {
+        "message": "Eid prayer will be held at 8:00 AM in the main prayer hall",
+        "imam": "Imam Ahmed Khan",
+        "date": "2024-01-15T00:00:00.000Z"
+      },
+      {
+        "message": "Islamic classes for children will start from next week",
+        "imam": "Imam Ahmed Khan",
+        "date": "2024-01-10T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "_id": "687a23d741a84f5e5736a359",
+    "name": "Masjid Noor",
+    "imam": "Imam Muhammad Ali",
+    "streetAddress": "456 Park Avenue, Block 8",
+    "postalCode": "75301",
+    "country": "Pakistan",
+    "state": "Sindh",
+    "city": "Karachi",
+    "phoneNumber": "+92 300 2345678",
+    "email": "masjid.noor@email.com",
+    "logo": null,
+    "description": "A beautiful masjid with modern facilities and a large prayer hall for the community.",
+    "namazTiming": {
+      "Fajr": "05:25",
+      "Dhuhr": "01:20",
+      "Asr": "04:50",
+      "Maghrib": "07:25",
+      "Isha": "08:50",
+      "Jummah": "01:35"
+    },
+    "donations": [],
+    "announcements": [
+      {
+        "message": "Quran recitation competition for youth this weekend",
+        "imam": "Imam Muhammad Ali",
+        "date": "2024-01-12T00:00:00.000Z"
+      },
+      {
+        "message": "New air conditioning system has been installed",
+        "imam": "Imam Muhammad Ali",
+        "date": "2024-01-08T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "_id": "687a23d741a84f5e5736a360",
+    "name": "Masjid Rahma",
+    "imam": "Imam Abdul Rahman",
+    "streetAddress": "789 Garden Road, Block 10",
+    "postalCode": "75302",
+    "country": "Pakistan",
+    "state": "Sindh",
+    "city": "Karachi",
+    "phoneNumber": "+92 300 3456789",
+    "email": "masjid.rahma@email.com",
+    "logo": null,
+    "description": "A community masjid known for its beautiful architecture and peaceful atmosphere.",
+    "namazTiming": {
+      "Fajr": "05:35",
+      "Dhuhr": "01:10",
+      "Asr": "04:40",
+      "Maghrib": "07:15",
+      "Isha": "08:40",
+      "Jummah": "01:25"
+    },
+    "donations": [],
+    "announcements": [
+      {
+        "message": "Weekly Islamic lecture series starting this Friday",
+        "imam": "Imam Abdul Rahman",
+        "date": "2024-01-14T00:00:00.000Z"
+      },
+      {
+        "message": "Community iftar program during Ramadan",
+        "imam": "Imam Abdul Rahman",
+        "date": "2024-01-05T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "_id": "687a23d741a84f5e5736a361",
+    "name": "Masjid Bilal",
+    "imam": "Imam Bilal Hassan",
+    "streetAddress": "321 Sunset Boulevard, Block 12",
+    "postalCode": "75303",
+    "country": "Pakistan",
+    "state": "Sindh",
+    "city": "Karachi",
+    "phoneNumber": "+92 300 4567890",
+    "email": "masjid.bilal@email.com",
+    "logo": null,
+    "description": "A historic masjid with rich cultural heritage and modern amenities for worshippers.",
+    "namazTiming": {
+      "Fajr": "05:20",
+      "Dhuhr": "01:25",
+      "Asr": "04:55",
+      "Maghrib": "07:30",
+      "Isha": "08:55",
+      "Jummah": "01:40"
+    },
+    "donations": [],
+    "announcements": [
+      {
+        "message": "Renovation work completed - new prayer hall open",
+        "imam": "Imam Bilal Hassan",
+        "date": "2024-01-16T00:00:00.000Z"
+      },
+      {
+        "message": "Arabic language classes for adults every Sunday",
+        "imam": "Imam Bilal Hassan",
+        "date": "2024-01-11T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "_id": "687a23d741a84f5e5736a362",
+    "name": "Masjid Quba",
+    "imam": "Imam Qasim Ahmed",
+    "streetAddress": "654 Ocean Drive, Block 15",
+    "postalCode": "75304",
+    "country": "Pakistan",
+    "state": "Sindh",
+    "city": "Karachi",
+    "phoneNumber": "+92 300 5678901",
+    "email": "masjid.quba@email.com",
+    "logo": null,
+    "description": "A modern masjid with state-of-the-art facilities and a welcoming community.",
+    "namazTiming": {
+      "Fajr": "05:40",
+      "Dhuhr": "01:05",
+      "Asr": "04:35",
+      "Maghrib": "07:10",
+      "Isha": "08:35",
+      "Jummah": "01:20"
+    },
+    "donations": [],
+    "announcements": [
+      {
+        "message": "New library with Islamic books now open",
+        "imam": "Imam Qasim Ahmed",
+        "date": "2024-01-13T00:00:00.000Z"
+      },
+      {
+        "message": "Youth group meeting every Saturday evening",
+        "imam": "Imam Qasim Ahmed",
+        "date": "2024-01-09T00:00:00.000Z"
+      }
+    ]
+  }
+]

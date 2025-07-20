@@ -1,0 +1,54 @@
+[{
+  "_id": {
+    "$oid": "6874aa90c6e22007c25e0eaf"
+  },
+  "name": "Usman",
+  "email": "usmanytusmanyt@gmail.com",
+  "address": "Khurrianwala ",
+  "phoneNumber": "03297410996",
+  "password": "$2b$10$UbFVNP6aOCjfXJofpt.57uoeLWXiPeLEt2ZHfWb/oFCJ334PhEkTC",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6874abcd97da1a42c1b22d89"
+  },
+  "name": "Usman",
+  "email": "hafiz@gmail.com",
+  "address": "Khurrianwala ",
+  "phoneNumber": "4513485484",
+  "password": "$2b$10$SvvKJjQp8M7JCsiNaOB/8Oxk5vLwgHqG/E8r0tCO8r9Nyoh4auDJK",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6875e722afc8b321e3f3be64"
+  },
+  "name": "Ali",
+  "email": "ali@gmail.com",
+  "address": "Fsd",
+  "phoneNumber": "0345125580",
+  "password": "$2b$10$AJSE4MJe6Wb3e8t1BSs6.e2IDt2xLDmpc0qaoP6GhfGzm06SVnTfC",
+  "role": "user",
+  "favouriteMasajids": [
+    "\"Jamia Masjid\"",
+    "islam masjid\n"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6875ecee63ba212f620921ec"
+  },
+  "name": "Usman Bhai",
+  "email": "usman@example.com",
+  "address": "Faisalabad",
+  "phoneNumber": "03001234567",
+  "password": "12345678",
+  "role": "user",
+  "favouriteMasajids": [
+    "Jamia Masjid",
+    "Bilal Masjid"
+  ],
+  "__v": 0
+}]

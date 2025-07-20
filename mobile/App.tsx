@@ -1,6 +1,6 @@
 // File: App.tsx
 
-import React, { useEffect, useState, ComponentProps } from 'react';
+import React, { useEffect, useState, ComponentProps, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as Font from 'expo-font';
 
@@ -144,6 +144,8 @@ export default function App() {
   console.log('🚀 App component mounted - TEST');
   alert('🚀 App component is loading!'); // Test if component is loading
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   console.log('🚀 App component mounted');
 
@@ -161,50 +163,105 @@ export default function App() {
     });
   }, []);
 
+  const sendTestNotification = async (token: string) => {
+    try {
+      const backendUrl = Constants.expoConfig?.extra?.BACKEND_API_URL || '';
+      console.log('🧪 Sending test notification...');
+      
+      const response = await fetch(`${backendUrl}/api/notifications/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: '🎉 Success!',
+          body: 'Push notification is working!'
+        }),
+      });
+      
+      const data = await response.json();
+      console.log('🧪 Test notification response:', data);
+      
+      if (data.success) {
+        alert('🎉 Test notification sent! Check your device for the notification!');
+      }
+    } catch (error) {
+      console.log('❌ Error sending test notification:', error);
+    }
+  };
+
+  const tryRegisterPushToken = async () => {
+    console.log(`🔄 Attempt ${retryCount + 1} to register push token...`);
+    
+    const token = await registerForPushNotificationsAsync();
+    console.log('📱 Push token received:', token);
+    
+    if (token) {
+      try {
+        const backendUrl = Constants.expoConfig?.extra?.BACKEND_API_URL || '';
+        console.log('🌐 Backend URL:', backendUrl);
+        console.log('📤 Registering token with backend...');
+        
+        const response = await fetch(`${backendUrl}/api/register-token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        });
+        
+        console.log('📥 Backend response status:', response.status);
+        const data = await response.json();
+        console.log('📥 Backend response data:', data);
+        
+        if (data.success) {
+          console.log('✅ Push token registered successfully!');
+          alert('✅ Push token registered successfully! Token: ' + token.substring(0, 20) + '...');
+          
+          // Send test notification automatically
+          await sendTestNotification(token);
+        } else {
+          console.log('❌ Failed to register push token:', data.message);
+          alert('❌ Failed to register push token: ' + data.message);
+          scheduleRetry();
+        }
+      } catch (err) {
+        console.log('❌ Error registering push token:', err);
+        alert('❌ Error registering push token: ' + err);
+        scheduleRetry();
+      }
+    } else {
+      console.log('❌ No push token received');
+      alert('❌ No push token received - retrying in 10 seconds...');
+      scheduleRetry();
+    }
+  };
+
+  const scheduleRetry = () => {
+    if (retryTimeoutRef.current) {
+      clearTimeout(retryTimeoutRef.current);
+    }
+    
+    const delay = Math.min(10000 * (retryCount + 1), 60000); // Max 60 seconds
+    console.log(`⏰ Scheduling retry in ${delay/1000} seconds...`);
+    
+    retryTimeoutRef.current = setTimeout(() => {
+      setRetryCount(prev => prev + 1);
+      tryRegisterPushToken();
+    }, delay);
+  };
+
   useEffect(() => {
     console.log('📱 Fonts loaded state:', fontsLoaded);
     if (!fontsLoaded) return; // Wait for fonts to load first
     
-    async function setupPushNotifications() {
-      console.log('🔧 Starting push notification setup...');
-      alert('🔧 Starting push notification setup...'); // Add visible alert
-      
-      const token = await registerForPushNotificationsAsync();
-      console.log('📱 Push token received:', token);
-      
-      if (token) {
-        try {
-          const backendUrl = Constants.expoConfig?.extra?.BACKEND_API_URL || '';
-          console.log('🌐 Backend URL:', backendUrl);
-          console.log('📤 Registering token with backend...');
-          
-          const response = await fetch(`${backendUrl}/api/register-token`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token }),
-          });
-          
-          console.log('📥 Backend response status:', response.status);
-          const data = await response.json();
-          console.log('📥 Backend response data:', data);
-          
-          if (data.success) {
-            console.log('✅ Push token registered successfully!');
-            alert('✅ Push token registered successfully! Token: ' + token.substring(0, 20) + '...');
-          } else {
-            console.log('❌ Failed to register push token:', data.message);
-            alert('❌ Failed to register push token: ' + data.message);
-          }
-        } catch (err) {
-          console.log('❌ Error registering push token:', err);
-          alert('❌ Error registering push token: ' + err);
-        }
-      } else {
-        console.log('❌ No push token received');
-        alert('❌ No push token received - check permissions');
+    console.log('🔧 Starting push notification setup...');
+    alert('🔧 Starting push notification setup...'); // Add visible alert
+    
+    tryRegisterPushToken();
+
+    // Cleanup on unmount
+    return () => {
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
       }
-    }
-    setupPushNotifications();
+    };
   }, [fontsLoaded]); // Run when fonts are loaded
 
   if (!fontsLoaded) return <View />;

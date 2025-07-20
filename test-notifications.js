@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const https = require('https');
 
 const BACKEND_URL = 'http://192.168.100.145:4000';
 let testCount = 0;
@@ -8,23 +8,51 @@ async function sendTestNotification() {
   console.log(`\n🧪 Test #${testCount} - Sending notification...`);
   
   try {
-    const response = await fetch(`${BACKEND_URL}/api/notifications/send-notification`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: `Test #${testCount}`,
-        body: `This is automatic test notification #${testCount}`
-      }),
+    const data = JSON.stringify({
+      title: `Test #${testCount}`,
+      body: `This is automatic test notification #${testCount}`
     });
-    
-    const data = await response.json();
-    console.log(`📱 Response:`, data);
-    
-    if (data.success) {
-      console.log(`✅ Notification sent successfully! Success count: ${data.successCount}`);
-    } else {
-      console.log(`❌ Failed to send notification: ${data.message}`);
-    }
+
+    const options = {
+      hostname: '192.168.100.145',
+      port: 4000,
+      path: '/api/notifications/send-notification',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let responseData = '';
+      
+      res.on('data', (chunk) => {
+        responseData += chunk;
+      });
+      
+      res.on('end', () => {
+        try {
+          const response = JSON.parse(responseData);
+          console.log(`📱 Response:`, response);
+          
+          if (response.success) {
+            console.log(`✅ Notification sent successfully! Success count: ${response.successCount}`);
+          } else {
+            console.log(`❌ Failed to send notification: ${response.message}`);
+          }
+        } catch (error) {
+          console.log(`❌ Error parsing response:`, error.message);
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      console.log(`❌ Error sending notification:`, error.message);
+    });
+
+    req.write(data);
+    req.end();
   } catch (error) {
     console.log(`❌ Error sending notification:`, error.message);
   }

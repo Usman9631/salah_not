@@ -129,13 +129,22 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
+    console.log('🔄 Loading fonts...');
     Font.loadAsync({
       'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
       'Roboto-Bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
-    }).then(() => setFontsLoaded(true));
+    }).then(() => {
+      console.log('✅ Fonts loaded successfully');
+      setFontsLoaded(true);
+    }).catch((error) => {
+      console.log('❌ Font loading error:', error);
+      setFontsLoaded(true); // Continue anyway
+    });
   }, []);
 
   useEffect(() => {
+    if (!fontsLoaded) return; // Wait for fonts to load first
+    
     async function setupPushNotifications() {
       console.log('🔧 Starting push notification setup...');
       alert('🔧 Starting push notification setup...'); // Add visible alert
@@ -176,7 +185,7 @@ export default function App() {
       }
     }
     setupPushNotifications();
-  }, []);
+  }, [fontsLoaded]); // Run when fonts are loaded
 
   if (!fontsLoaded) return <View />;
 

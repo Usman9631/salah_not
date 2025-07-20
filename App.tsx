@@ -126,6 +126,8 @@ async function registerForPushNotificationsAsync() {
 }
 
 export default function App() {
+  console.log('🚀 App component mounted - TEST');
+  alert('🚀 App component is loading!'); // Test if component is loading
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   console.log('🚀 App component mounted');

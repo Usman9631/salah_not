@@ -110,19 +110,31 @@ function RootNavigator() {
 }
 
 async function registerForPushNotificationsAsync() {
+  console.log('🔐 Starting permission check...');
   let token;
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  console.log('📋 Existing permission status:', existingStatus);
   let finalStatus = existingStatus;
   if (existingStatus !== 'granted') {
+    console.log('🔐 Requesting permissions...');
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
+    console.log('📋 New permission status:', finalStatus);
   }
   if (finalStatus !== 'granted') {
+    console.log('❌ Permission denied');
     alert('Failed to get push token for push notification!');
     return null;
   }
-  token = (await Notifications.getExpoPushTokenAsync()).data;
-  return token;
+  console.log('✅ Permission granted, getting token...');
+  try {
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log('🎫 Token received:', token ? token.substring(0, 20) + '...' : 'null');
+    return token;
+  } catch (error) {
+    console.log('❌ Error getting token:', error);
+    return null;
+  }
 }
 
 export default function App() {

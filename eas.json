@@ -4,7 +4,12 @@
       "distribution": "internal",
       "channel": "development",
       "developmentClient": true,
-      "android": { "gradleCommand": ":app:assembleDebug" },
+      "android": { 
+        "gradleCommand": ":app:assembleDebug",
+        "env": {
+          "GOOGLE_SERVICES_JSON": "android/app/google-services.json"
+        }
+      },
       "ios": { "simulator": true }
     },
     "preview": {

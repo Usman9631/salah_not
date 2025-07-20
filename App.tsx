@@ -137,25 +137,39 @@ export default function App() {
 
   useEffect(() => {
     async function setupPushNotifications() {
+      console.log('🔧 Starting push notification setup...');
       const token = await registerForPushNotificationsAsync();
+      console.log('📱 Push token received:', token);
+      
       if (token) {
         try {
           const backendUrl = Constants.expoConfig?.extra?.BACKEND_API_URL || '';
+          console.log('🌐 Backend URL:', backendUrl);
+          console.log('📤 Registering token with backend...');
+          
           const response = await fetch(`${backendUrl}/api/register-token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
           });
+          
+          console.log('📥 Backend response status:', response.status);
           const data = await response.json();
-          console.log('Push token registered:', data);
+          console.log('📥 Backend response data:', data);
+          
           if (data.success) {
+            console.log('✅ Push token registered successfully!');
             alert('Push token registered successfully!');
           } else {
+            console.log('❌ Failed to register push token:', data.message);
             alert('Failed to register push token.');
           }
         } catch (err) {
+          console.log('❌ Error registering push token:', err);
           alert('Error registering push token.');
         }
+      } else {
+        console.log('❌ No push token received');
       }
     }
     setupPushNotifications();

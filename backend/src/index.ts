@@ -50,7 +50,7 @@ app.use('/api', tokenRoutes);
 app.use('/api/user', userRoleRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/live-streams', liveStreamRoutes);
-app.use('/api', notificationRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

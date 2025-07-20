@@ -18,4 +18,14 @@ router.post('/register-token', async (req, res) => {
   }
 });
 
+// GET /api/tokens - List all registered tokens
+router.get('/tokens', async (req, res) => {
+  try {
+    const tokens = await Token.find({});
+    res.json({ success: true, count: tokens.length, tokens: tokens.map(t => t.token) });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 export default router;
